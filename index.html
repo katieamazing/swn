@@ -1,202 +1,144 @@
 <html>
 <head>
-<title>space invaders</title>
+<meta name="mobile-web-app-capable" content="yes" />
+<title>stars without number</title>
 </head>
 <body>
-hello
-<hr>
-<canvas id="screen" width="200" height="200"></canvas>
-<hr>
-goodbye
+<canvas id="it" width="950" height="1425"></canvas>
 <script>
+(function(){
 
-var keyState = {};
+var bodies = [];
+var size = 75;
+var cols = 8;
+var rows = 10;
+var margin = 75;
 
-window.onkeydown = function (e) {
-    keyState[e.keyCode] = true;
-};
-window.onkeyup = function (e) {
-    keyState[e.keyCode] = false;
-};
-var canvas = document.getElementById('screen');
+// functions from redblobgames.com/grids/hexagons
+function pixel_to_axial(px, py) {
+  px -= margin;
+  py -= margin;
+  var q = px * (2 / (size * 3));
+  var r = (-px / 3 + Math.sqrt(3) / 3 * py) / size;
+  return { q: q, r: r, px: px, py: py }
+}
+
+function axial_to_cube(input) {
+  input.x = input.q;
+  input.z = input.r;
+  input.y = -input.x-input.z;
+  return input;
+}
+
+function cube_round(h) {
+  var rx = Math.round(h.x);
+  var ry = Math.round(h.y);
+  var rz = Math.round(h.z);
+  var x_diff = Math.abs(rx - h.x);
+  var y_diff = Math.abs(ry - h.y);
+  var z_diff = Math.abs(rz - h.z);
+  if (x_diff > y_diff && x_diff > z_diff) {
+    rx = -ry-rz;
+  } else if (y_diff > z_diff) {
+    yr = -rx-rz;
+  } else {
+    rz = -rx-ry;
+  }
+  h.x = rx;
+  h.y = ry;
+  h.z = rz;
+  return h;
+}
+
+function cube_to_odd_q(c) {
+  c.col = c.x;
+  c.row = c.z + (c.x - (c.x & 1)) / 2;
+  return c;
+}
+
+function odd_q_to_pixel(h) {
+  var px = size * (3/2) * h.col + margin;
+  var py = size * Math.sqrt(3) * (h.row + 0.5 * (h.col & 1)) + margin;
+  return { px: px, py: py };
+}
+
+var canvas = document.getElementById('it');
+var touching = false
 canvas.addEventListener('touchstart', function touchStartListener(e) {
+  e.preventDefault();
+  touching = true;
+}, false);
+canvas.addEventListener('touchend', function touchEndListener(e) {
   e.preventDefault();
   var touches = e.changedTouches;
   for (var i = 0; i < touches.length; i++) {
-    console.log(touches[i].pageX, touches[i].pageY);
-    bodies.push(new Invader({
-        x: touches[i].pageX,
-        y: touches[i].pageY
-    }));
+    var x = touches[i].pageX;
+    var y = touches[i].pageY;
+    var body = cube_to_odd_q(cube_round(axial_to_cube(pixel_to_axial(x, y))));
+    if (body.col >= 0 && body.col < cols && body.row >= 0 && body.row < rows) {
+      bodies.push(body);
+    }
   }
+  touching = false;
 }, false);
+var ctx = canvas.getContext('2d');
 
-function isDown(keyCode) {
-    return keyState[keyCode] === true;
-}
-var LEFT = 37;
-var RIGHT = 39;
-var SPACE = 32;
-
-var screen = canvas.getContext('2d');
-var gameSize = {
-    x: canvas.width,
-    y: canvas.height
-};
-
-function Bullet(center, velocity) {
-    this.size = {
-        x: 3,
-        y: 3
-    };
-    this.center = center;
-    this.velocity = velocity;
+function two_digit(x) {
+  var tens = Math.floor(x / 10);
+  var ones = Math.round(x - tens * 10);
+  return tens.toString() + ones.toString();
 }
 
-Bullet.prototype.update = function bullet_update() {
-    this.center.x += this.velocity.x;
-    this.center.y += this.velocity.y;
-};
-
-
-var Player = function () {
-    this.size = {
-        x: 15,
-        y: 15
-    };
-    this.center = {
-        x: gameSize.x / 2,
-        y: gameSize.y - this.size.x
-    };
-};
-
-Player.prototype.update = function player_update() {
-    if (isDown(LEFT)) {
-        this.center.x -= 2;
+function draw_hexes() { 
+  var row, col;
+  ctx.strokeStyle = '#ffffff';
+  for (row = 0; row < 10; row++ ) {
+    for (col = 0; col < 8; col++ ) {
+      var p = odd_q_to_pixel({row: row, col:col});
+      ctx.beginPath();
+      ctx.arc(p.px, p.py, size * 0.8, 0, 2 * Math.PI);
+      ctx.stroke();
     }
-    if (isDown(RIGHT)) {
-        this.center.x += 2;
-    }
-    if (isDown(SPACE)) {
-        var bullet = new Bullet({
-            x: this.center.x,
-            y: this.center.y - this.size.y / 2
-        }, {
-            x: 0,
-            y: -6
-        });
-        addBody(bullet);
-    }
-};
-
-var Invader = function (center) {
-    this.size = {
-        x: 15,
-        y: 15
-    };
-    this.center = center;
-    this.patrolX = 0;
-    this.speedX = 0.3;
-};
-
-Invader.prototype.update = function invader_update() {
-    if (this.patrolX < 0) {
-        this.speedX = Math.abs(this.speedX);
-    }
-    if (this.patrolX > 40) {
-        this.speedX = -1 * Math.abs(this.speedX);
-    }
-    this.center.x += this.speedX;
-    this.patrolX += this.speedX;
-    if (Math.random() > 0.95 && !invadersBelow(this)) {
-        var bullet = new Bullet({
-            x: this.center.x,
-            y: this.center.y + this.size.y / 2
-        }, {
-            x: Math.random() - 0.5,
-            y: 6
-        });
-        addBody(bullet);
-    }
-};
-
-var bodies = [new Player()];
-
-function addBody(body) {
-    bodies.push(body);
-}
-
-function drawRect(body) {
-    screen.fillRect(
-    body.center.x - body.size.x / 2,
-    body.center.y - body.size.y / 2,
-    body.size.x,
-    body.size.y);
-}
-
-function colliding(b1, b2) {
-    if (b1 === b2) {
-        return false;
-    }
-    if (b1.center.x + b1.size.x / 2 < b2.center.x - b2.size.x / 2) {
-        return false;
-    }
-    if (b1.center.y + b1.size.y / 2 < b2.center.y - b2.size.y / 2) {
-        return false;
-    }
-    if (b1.center.x - b1.size.x / 2 > b2.center.x + b2.size.x / 2) {
-        return false;
-    }
-    if (b1.center.y - b1.size.y / 2 > b2.center.y + b2.size.y / 2) {
-        return false;
-    }
-    return true;
-}
-
-function notColliding(i) {
-    for (j = i + 1; j < bodies.length; j++) {
-        if (colliding(bodies[i], bodies[j])) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function invadersBelow(invader) {
-    var i;
-    for (i = 0; i < bodies.length; i++) {
-        if (bodies[i] instanceof Invader &&
-            bodies[i].center.y > invader.center.y &&
-            Math.abs(bodies[i].center.x - invader.center.x) < invader.size.x
-            ) {
-            return true;
-        }
-    }
-    return false;
+  }
 }
 
 function tick() {
-    var i, j;
+    var i;
     // update
-    var newbodies = [];
     for (i = 0; i < bodies.length; i++) {
-        if (notColliding(i)) {
-            newbodies.push(bodies[i]);
-        }
-    }
-    bodies = newbodies;
-    for (i = 0; i < bodies.length; i++) {
-        bodies[i].update();
+      var target = odd_q_to_pixel(bodies[i]);
+      console.log(target.px.toString() + ", " + target.py.toString());
+      bodies[i].px = 0.95 * bodies[i].px + 0.05 * target.px;
+      bodies[i].py = 0.95 * bodies[i].py + 0.05 * target.py;
     }
     // draw
-    screen.clearRect(0, 0, gameSize.x, gameSize.y);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#ffffff';
+    if (touching) {
+      draw_hexes();
+    }
     for (i = 0; i < bodies.length; i++) {
-        drawRect(bodies[i]);
+        var px = bodies[i].px;
+        var py = bodies[i].py;
+        var q = bodies[i].q;
+        var r = bodies[i].r;
+        var x = Math.round(bodies[i].x);
+        var y = Math.round(bodies[i].y);
+        var z = Math.round(bodies[i].z);
+        var col = bodies[i].col;
+        var row = bodies[i].row;
+        // ctx.fillText(q.toString() + " " + r.toString(), px, py);
+        // ctx.fillText(x.toString() + " " + y.toString() + " " + z.toString(), px, py);
+        ctx.fillText(two_digit(col) + two_digit(row), px, py);
     }
     requestAnimationFrame(tick);
 }
 console.log('hi');
 tick();
+
+})();
 </script>
 </body>
 </html>
