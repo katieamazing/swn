@@ -49,7 +49,7 @@ var bodies = [
 {
 "Name": "Sheon", 
 "TL": "4+",
-"Description": "Sheon is a major stopover point for many traders as it is a world connecting the two halves of the sector well known for its technical experience and constant demand for zero-g specialized plants.  Sheon's orbital ring is populated by millions of inhabitants, the vast majority of which are clones. The industries of Sheon are ship building and repair, mining the gas giant, and farming for calories and oxygen.\\nThe government is conducted remotely and in public on the Sheon-specific network board; it's pretty friendly and pleasant for citizens, but it's somewhat impenetrable and confusing for outsiders. The two major factions are the liberal Postech faction and the more conservative, Sheon-Prophecy-abiding Pretech faction. Immigration and circularization are hot political topics.\\n There is basically one recognizable city, the outer-circularized orbit, which is the most civilized and cosmopolitan orbit. It includes the university and the closest thing to a spaceport - a collection of purpose-built stations and asteroids that have been mined-out and lived-in long enough that they're basically space stations that host spaceship repair businesses. These are generally more profitable, progressive, and cosmopolitan.\\nThe ring around Shen’s gas giant is congested at the best of times. The magnetic field and large number of micro meteors makes traveling the ring hazardous for any ship except specially outfitted Sheon craft.  There are also so many populated habitats and old caches of pretech equipment that Sheon government asks that only cold gas thrusters are used within 1,000 KM of the ring.\\n\\nWe sold our salvaged nanobots to AJ-111, a Sheon malware researcher. We also brought a group of Itki refugees to Sheon."
+"Description": "Sheon is a major stopover point for many traders as it is a world connecting the two halves of the sector well known for its technical experience and constant demand for zero-g specialized plants.  Sheon's orbital ring is populated by millions of inhabitants, the vast majority of which are clones. The industries of Sheon are ship building and repair, mining the gas giant, and farming for calories and oxygen.<br>The government is conducted remotely and in public on the Sheon-specific network board; it's pretty friendly and pleasant for citizens, but it's somewhat impenetrable and confusing for outsiders. The two major factions are the liberal Postech faction and the more conservative, Sheon-Prophecy-abiding Pretech faction. Immigration and circularization are hot political topics.<br> There is basically one recognizable city, the outer-circularized orbit, which is the most civilized and cosmopolitan orbit. It includes the university and the closest thing to a spaceport - a collection of purpose-built stations and asteroids that have been mined-out and lived-in long enough that they're basically space stations that host spaceship repair businesses. These are generally more profitable, progressive, and cosmopolitan.<br>The ring around Shen’s gas giant is congested at the best of times. The magnetic field and large number of micro meteors makes traveling the ring hazardous for any ship except specially outfitted Sheon craft.  There are also so many populated habitats and old caches of pretech equipment that Sheon government asks that only cold gas thrusters are used within 1,000 KM of the ring.<br><br>We sold our salvaged nanobots to AJ-111, a Sheon malware researcher. We also brought a group of Itki refugees to Sheon."
 }
    ]
  },
@@ -135,7 +135,7 @@ var bodies = [
 {
 "Name": "Tide", 
 "TL": "3",
-"Description": "Breathable atmosphere, temperate water world with few stable islands along the Equator.  Tide is presently still developing spaceflight industries, and the vast majority of transport is via marine shipping.  Aerial navigation is hampered by numerous semi-submerged alien ruins with active anti-air defense.  The local political structure is led by the “Empress of Storms”; involvement with local politics is strongly discouraged."
+"Description": "Breathable atmosphere, temperate water world with few stable islands along the Equator.  Tide is presently still developing spaceflight industries, and the vast majority of transport is via marine shipping.  Aerial navigation is hampered by numerous semi-submerged alien ruins with active anti-air defense.  The local political structure is led by the \"Empress of Storms\"; involvement with local politics is strongly discouraged."
 }
    ]
  },  
@@ -146,7 +146,7 @@ var bodies = [
 {
 "Name": "Korda", 
 "TL": "4",
-"Description": "This is a well developed system with one earth-like planet with billions of people.  It survived the ‘Scream relatively well and managed to colonize a secondary planet about 300 years ago.  Nearly all of the resources of the colonized planet Itki have been shipped off world to support the massive shipyards in orbit around Korda.  These shipyards are owned by Draco Corp. Pan Stellar. The government of Korda is generally respected and trusted by its citizens. The laws and regulation governing off-world visitors are strict and subject to frequent changes.\\n\\nWe dropped off Amal the Butcher and his gang here."
+"Description": "This is a well developed system with one earth-like planet with billions of people.  It survived the ‘Scream relatively well and managed to colonize a secondary planet about 300 years ago.  Nearly all of the resources of the colonized planet Itki have been shipped off world to support the massive shipyards in orbit around Korda.  These shipyards are owned by Draco Corp. Pan Stellar. The government of Korda is generally respected and trusted by its citizens. The laws and regulation governing off-world visitors are strict and subject to frequent changes.<br><br>We dropped off Amal the Butcher and his gang here."
 }, 
 {
 "Name": "Itki", 
@@ -162,7 +162,7 @@ var bodies = [
 {
 "Name": "Sepulchre", 
 "TL": "2",
-"Description": "Thick atmosphere, extremely broken, jagged terrain. Prison world pre-scream, mining the rare earths found in relative abundance on the world.  Current population is largely bandits, scavengers, petty dictators, camp followers, and the detritus of their failed predecessors.  Oxygen supplies needed for life.  Most natives inhabit sealed “spire cities”.\\n\\nWe delivered cargo to Sepulchre which we were remarkably incurious. We took a job from Maya Lin, a political player in the Spire City of Rastov. Maya Lin spearheaded a coup of Rastov in her last hours of life, and we left Sepulchre in a hurry with some pre-tech and an outbound gang of miners led by the not-so-sinister Amal the Butcher."
+"Description": "Thick atmosphere, extremely broken, jagged terrain. Prison world pre-scream, mining the rare earths found in relative abundance on the world.  Current population is largely bandits, scavengers, petty dictators, camp followers, and the detritus of their failed predecessors.  Oxygen supplies needed for life.  Most natives inhabit sealed “spire cities”.<br><br>We delivered cargo to Sepulchre which we were remarkably incurious. We took a job from Maya Lin, a political player in the Spire City of Rastov. Maya Lin spearheaded a coup of Rastov in her last hours of life, and we left Sepulchre in a hurry with some pre-tech and an outbound gang of miners led by the not-so-sinister Amal the Butcher."
 }
    ]
  },
@@ -206,7 +206,7 @@ var bodies = [
 {
 "Name": "Liberty",
 "TL": "1",
-"Description": "Thin atmosphere with tolerable climate. Pressure masks are needed at the surface.  Population appears to be descended from pre-Scream convicts freed from Sepulchre.  No tech beyond scavenged breath masks. \\nWARNING: No refueling station in system."
+"Description": "Thin atmosphere with tolerable climate. Pressure masks are needed at the surface.  Population appears to be descended from pre-Scream convicts freed from Sepulchre.  No tech beyond scavenged breath masks. <br>WARNING: No refueling station in system."
 }
    ]
  },

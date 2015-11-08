@@ -1,9 +1,13 @@
 (function(){
 
-    var size = 75;
-    var cols = 8;
-    var rows = 10;
-    var margin = 75;
+    var SIZE = 57;
+    var COLS = 8;
+    var ROWS = 10;
+    var MARGIN = SIZE;
+    // var BLACK = '#000000';
+    var WHITE = '#ffffff';
+    var ORBIT_SPACING = 25;
+    var ORBIT_MIN = 50;
 
     var sector_canvas = document.querySelector("#sector canvas");
     var sector_ctx = sector_canvas.getContext('2d');
@@ -47,10 +51,10 @@
     
     // functions from redblobgames.com/grids/hexagons
     function pixel_to_axial(px, py) {
-        px -= margin;
-        py -= margin;
-        var q = px * (2 / (size * 3));
-        var r = (-px / 3 + Math.sqrt(3) / 3 * py) / size;
+        px -= MARGIN;
+        py -= MARGIN;
+        var q = px * (2 / (SIZE * 3));
+        var r = (-px / 3 + Math.sqrt(3) / 3 * py) / SIZE;
         return { q: q, r: r, px: px, py: py }
     }
     
@@ -88,8 +92,8 @@
     }
     
     function odd_q_to_pixel(h) {
-        var px = size * (3/2) * h.col + margin;
-        var py = size * Math.sqrt(3) * (h.row + 0.5 * (h.col & 1)) + margin;
+        var px = SIZE * (3/2) * h.col + MARGIN;
+        var py = SIZE * Math.sqrt(3) * (h.row + 0.5 * (h.col & 1)) + MARGIN;
         return { px: px, py: py };
     }
     
@@ -105,15 +109,15 @@
         return two_digit(col) + two_digit(row);
     }
     
-    function draw_hexagon(ctx, p, size) {
+    function draw_hexagon(ctx, p, SIZE) {
         ctx.beginPath();
-        ctx.moveTo(p.px + size * 1.00, p.py + size * 0.00);
-        ctx.lineTo(p.px + size * 0.50, p.py + size * 0.86);
-        ctx.lineTo(p.px - size * 0.50, p.py + size * 0.86);
-        ctx.lineTo(p.px - size * 1.00, p.py + size * 0.00);
-        ctx.lineTo(p.px - size * 0.50, p.py - size * 0.86);
-        ctx.lineTo(p.px + size * 0.50, p.py - size * 0.86);
-        ctx.lineTo(p.px + size * 1.00, p.py + size * 0.00);
+        ctx.moveTo(p.px + SIZE * 1.00, p.py + SIZE * 0.00);
+        ctx.lineTo(p.px + SIZE * 0.50, p.py + SIZE * 0.86);
+        ctx.lineTo(p.px - SIZE * 0.50, p.py + SIZE * 0.86);
+        ctx.lineTo(p.px - SIZE * 1.00, p.py + SIZE * 0.00);
+        ctx.lineTo(p.px - SIZE * 0.50, p.py - SIZE * 0.86);
+        ctx.lineTo(p.px + SIZE * 0.50, p.py - SIZE * 0.86);
+        ctx.lineTo(p.px + SIZE * 1.00, p.py + SIZE * 0.00);
         ctx.stroke();
     }
     
@@ -131,11 +135,11 @@
     
     function draw_hexes(ctx) { 
         var row, col;
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = WHITE;
         for (row = 0; row < 10; row++ ) {
             for (col = 0; col < 8; col++ ) {
                 var p = odd_q_to_pixel({row: row, col:col});
-                draw_hexagon(ctx, p, size);
+                draw_hexagon(ctx, p, SIZE);
             }
         }
     }
@@ -182,9 +186,9 @@
                 var i, j;
 
                 sector_ctx.clearRect(0, 0, sector_canvas.width, sector_canvas.height);
-                sector_ctx.fillStyle = '#000000';
-                sector_ctx.fillRect(0, 0, sector_canvas.width, sector_canvas.height);
-                sector_ctx.fillStyle = '#ffffff';
+                // sector_ctx.fillStyle = BLACK;
+                // sector_ctx.fillRect(0, 0, sector_canvas.width, sector_canvas.height);
+                sector_ctx.fillStyle = WHITE;
                 draw_hexes(sector_ctx);
                 for (i = 0; i < bodies.length; i++) {
                     var body = bodies[i]
@@ -192,11 +196,11 @@
                     var col = parseInt(coords.substring(0, 2));
                     var row = parseInt(coords.substring(2, 4));
                     var h = odd_q_to_pixel({col:col, row:row});
-                    centered(sector_ctx, body.System, h.px, h.py - size * 0.7);
+                    centered(sector_ctx, body.System, h.px, h.py - SIZE * 0.7);
                     draw_disk(sector_ctx, h.px, h.py, 10);
                     var ls = body.Locations;
                     for (j = 0; j < ls.length; j++) {
-                        draw_disk(sector_ctx, h.px + j*10 + 25, h.py, 3);
+                        draw_disk(sector_ctx, h.px + j*10 + ORBIT_SPACING, h.py, 3);
                     }
                 }
                 setTimeout(function () {
@@ -214,7 +218,7 @@
             },
             onbeforeview_system: function (e, from, to, x, y) {
                 var body = cube_to_odd_q(cube_round(axial_to_cube(pixel_to_axial(x, y))));
-                if (body.col >= 0 && body.col < cols && body.row >= 0 && body.row < rows) {
+                if (body.col >= 0 && body.col < COLS && body.row >= 0 && body.row < ROWS) {
                     for (i = 0; i < bodies.length; i++) {
                         if (name(body) == bodies[i].Chartloc) {
                             current_system = bodies[i];
@@ -226,34 +230,33 @@
             },
             onentersystem: function (e, from, to, x, y) {
                 system_ctx.clearRect(0, 0, system_canvas.width, system_canvas.height);
-                system_ctx.fillStyle = '#000000';
-                system_ctx.fillRect(0, 0, system_canvas.width, system_canvas.height);
-                system_ctx.fillStyle = '#ffffff';
+                // system_ctx.fillStyle = BLACK;
+                // system_ctx.fillRect(0, 0, system_canvas.width, system_canvas.height);
+                system_ctx.fillStyle = WHITE;
                 var star = {
                     px: system_canvas.width / 2,
                     py: system_canvas.height * 0.35
                 };
                 draw_disk(system_ctx, star.px, star.py, 25);
-                system_ctx.strokeStyle = '#ffffff';
-                var size = 450;
+                system_ctx.strokeStyle = WHITE;
                 centered(system_ctx, current_system.System, star.px, 10);
                 var ls = current_system.Locations;
                 for (i = 0; i < ls.length; i++) {
-                    var r = i * 25 + 50;
+                    var r = i * ORBIT_SPACING + ORBIT_MIN;
                     draw_circle(system_ctx, star.px, star.py, r);
                     draw_disk(system_ctx, star.px + r, star.py, 10);
                     var l = ls[i];
                     centeredTop(system_ctx, l.Name + ", TL: " + l.TL, star.px, star.py + r);
                 }
                 setTimeout(function () {
-                    document.addEventListener('touchstart', canvas_touch_start_listener, false);
-                    document.addEventListener('touchend', view_location_listener, false);
+                    system_canvas.addEventListener('touchstart', canvas_touch_start_listener, false);
+                    system_canvas.addEventListener('touchend', view_location_listener, false);
                 }, 0);
                 current_location = null;
             },
             onleavesystem: function (e, from, to) {
-                document.removeEventListener('touchstart', canvas_touch_start_listener, false);
-                document.removeEventListener('touchend', view_location_listener, false);
+                system_canvas.removeEventListener('touchstart', canvas_touch_start_listener, false);
+                system_canvas.removeEventListener('touchend', view_location_listener, false);
             },
             onbeforeview_location: function (e, from, to, x, y) {
                 var star = {
@@ -261,22 +264,28 @@
                     py: system_canvas.height * 0.35
                 };
                 var ls = current_system.Locations;
+                var best_so_far = null;
+                var best_dist_so_far = null;
                 for (i = 0; i < ls.length; i++) {
-                    var r = i * 25 + 50;
-                    if (dist(x, y, star.px + r, star.py) <= 10) {
-                        current_location = ls[i];
-                        return true;
+                    var r = i * ORBIT_SPACING + ORBIT_MIN;
+                    var d = dist(x, y, star.px + r, star.py);
+                    if (best_so_far == null || best_dist_so_far > d) {
+                        best_so_far = ls[i];
+                        best_dist_so_far = d;
                     }
                 }
-                return false;
+                if (best_so_far != null) {
+                    current_location = best_so_far;
+                }
             },
             onenterlocation: function (e, from, to, x, y) {
                 location_ctx.clearRect(0, 0, location_canvas.width, location_canvas.height);
-                location_ctx.fillStyle = '#000000';
-                location_ctx.fillRect(0, 0, location_canvas.width, location_canvas.height);
-                location_ctx.fillStyle = '#ffffff';
+                // location_ctx.fillStyle = BLACK;
+                // location_ctx.fillRect(0, 0, location_canvas.width, location_canvas.height);
+                location_ctx.fillStyle = WHITE;
                 centered(location_ctx, current_location.Name,
                          location_canvas.width / 2, location_canvas.height / 2);
+                document.getElementById('location_description').innerHTML = current_location.Description;
                 setTimeout(function () {
                     location_canvas.addEventListener('touchstart', canvas_touch_start_listener, false);
                     location_canvas.addEventListener('touchend', location_back_listener, false);
