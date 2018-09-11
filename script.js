@@ -25,7 +25,12 @@
             fsm.view_system(x, y);
         }
     }
-    
+
+    function view_system_click_listener(e) {
+        e.preventDefault();
+        fsm.view_system(e.clientX, e.clientY);
+    }
+
     var system_canvas = document.querySelector("#system canvas");
     var system_ctx = system_canvas.getContext('2d');
     function view_location_listener(e) {
@@ -37,7 +42,12 @@
             fsm.view_location(x, y);
         }
     }
-    
+
+    function view_location_click_listener(e) {
+        e.preventDefault();
+        fsm.view_location(e.clientX, e.clientY);
+    }
+
     var location_canvas = document.querySelector("#location canvas");
     var location_ctx = location_canvas.getContext('2d');
     function location_back_listener(e) {
@@ -48,7 +58,7 @@
     function dist(x1, y1, x2, y2) {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
-    
+
     // functions from redblobgames.com/grids/hexagons
     function pixel_to_axial(px, py) {
         px -= MARGIN;
@@ -57,14 +67,14 @@
         var r = (-px / 3 + Math.sqrt(3) / 3 * py) / SIZE;
         return { q: q, r: r, px: px, py: py }
     }
-    
+
     function axial_to_cube(input) {
         input.x = input.q;
         input.z = input.r;
         input.y = -input.x-input.z;
         return input;
     }
-    
+
     function cube_round(h) {
         var rx = Math.round(h.x);
         var ry = Math.round(h.y);
@@ -84,31 +94,31 @@
         h.z = rz;
         return h;
     }
-    
+
     function cube_to_odd_q(c) {
         c.col = c.x;
         c.row = c.z + (c.x - (c.x & 1)) / 2;
         return c;
     }
-    
+
     function odd_q_to_pixel(h) {
         var px = SIZE * (3/2) * h.col + MARGIN;
         var py = SIZE * Math.sqrt(3) * (h.row + 0.5 * (h.col & 1)) + MARGIN;
         return { px: px, py: py };
     }
-    
+
     function two_digit(x) {
         var tens = Math.floor(x / 10);
         var ones = Math.round(x - tens * 10);
         return tens.toString() + ones.toString();
     }
-    
+
     function name(h) {
         var col = h.col;
         var row = h.row;
         return two_digit(col) + two_digit(row);
     }
-    
+
     function draw_hexagon(ctx, p, SIZE) {
         ctx.beginPath();
         ctx.moveTo(p.px + SIZE * 1.00, p.py + SIZE * 0.00);
@@ -120,20 +130,20 @@
         ctx.lineTo(p.px + SIZE * 1.00, p.py + SIZE * 0.00);
         ctx.stroke();
     }
-    
+
     function draw_circle(ctx, x, y, radius) {
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
         ctx.stroke();
     }
-    
+
     function draw_disk(ctx, x, y, radius) {
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, 2 * Math.PI);
         ctx.fill();
     }
-    
-    function draw_hexes(ctx) { 
+
+    function draw_hexes(ctx) {
         var row, col;
         ctx.strokeStyle = WHITE;
         for (row = 0; row < 10; row++ ) {
@@ -143,18 +153,18 @@
             }
         }
     }
-    
+
     function centered(ctx, text, x, y) {
         var textWidth = ctx.measureText(text).width;
         ctx.fillText(text, x - textWidth / 2, y);
     }
-    
+
     function centeredTop(ctx, text, x, y) {
         var metrics = ctx.measureText(text);
         // there is no metrics.height element, so this is a fudge
-        ctx.fillText(text, x - metrics.width / 2, y + 10); 
+        ctx.fillText(text, x - metrics.width / 2, y + 10);
     }
-    
+
     // globals
     var current_system = null;
     var current_location = null;
@@ -207,6 +217,7 @@
                     console.log('something');
                     document.addEventListener('touchstart', canvas_touch_start_listener, false);
                     document.addEventListener('touchend', view_system_listener, false);
+                    document.addEventListener('click', view_system_click_listener, false);
                 }, 0);
                 current_system = null;
                 current_location = null;
@@ -215,6 +226,7 @@
                 console.log('leaving sector');
                 document.removeEventListener('touchstart', canvas_touch_start_listener, false);
                 document.removeEventListener('touchend', view_system_listener, false);
+                document.removeEventListener('click', view_system_click_listener, false);
             },
             onbeforeview_system: function (e, from, to, x, y) {
                 var body = cube_to_odd_q(cube_round(axial_to_cube(pixel_to_axial(x, y))));
@@ -251,12 +263,14 @@
                 setTimeout(function () {
                     system_canvas.addEventListener('touchstart', canvas_touch_start_listener, false);
                     system_canvas.addEventListener('touchend', view_location_listener, false);
+                    system_canvas.addEventListener('click', view_location_click_listener, false);
                 }, 0);
                 current_location = null;
             },
             onleavesystem: function (e, from, to) {
                 system_canvas.removeEventListener('touchstart', canvas_touch_start_listener, false);
                 system_canvas.removeEventListener('touchend', view_location_listener, false);
+                system_canvas.removeEventListener('click', view_location_click_listener, false);
             },
             onbeforeview_location: function (e, from, to, x, y) {
                 var star = {
@@ -289,11 +303,13 @@
                 setTimeout(function () {
                     location_canvas.addEventListener('touchstart', canvas_touch_start_listener, false);
                     location_canvas.addEventListener('touchend', location_back_listener, false);
+                    location_canvas.addEventListener('click', location_back_listener, false);
                 }, 0);
             },
             onleavelocation: function (e, from, to) {
                 location_canvas.removeEventListener('touchstart', canvas_touch_start_listener, false);
                 location_canvas.removeEventListener('touchend', location_back_listener, false);
+                location_canvas.removeEventListener('click', location_back_listener, false);
             }
         }
     });
