@@ -35,40 +35,57 @@ var bodies = [
     ]
   },
   {
-    "System": "Rasarc",
+    "System": "Sianarc",
     "Chartloc": "0403",
     "Locations": [
       {
-        "Name": "Rashart",
+        "Name": "Siahart",
         "Environment": "Oxygen-rich biosphere and temperate climate.",
         "TL": "4",
-        "Description": "Rashart is the center of the Ran Empire. This lush homeworld is densely populated with sybaritic inhabitants. A high tech level and a deep and complex serf culture enable most residents of Rashart to pass their days in idleness. Rashart is an artistic and leisure capital, synonymous with luxury and excess."
+        "Description": "Siahart is the center of the Sian Empire. This lush homeworld is densely populated with sybaritic inhabitants. A high tech level and a deep and complex serf culture enable most residents of Siahart to pass their days in idleness. Siahart is an artistic and leisure capital, synonymous with luxury and excess."
       },
       {
-        "Name": "Raslom",
+        "Name": "Sialom",
         "Environment": "Oxygen-rich biosphere and temperate climate.",
         "TL": "4",
-        "Description": "Named for its green appearance, Raslom produces a wide array of top-quality agricultural produce. The dynastic families that own the vast farms of Raslom are secretive, competitive, and cutthroat when it comes to securing the genetic and cultivation secrets of their holdings."
+        "Description": "Named for its green appearance, Sialom produces a wide array of top-quality agricultural produce. The dynastic families that own the vast farms of Sialom are secretive, competitive, and cutthroat when it comes to securing the genetic and cultivation secrets of their holdings."
       }
     ]
   },
   {
-    "System": "Rassen",
+    "System": "Siasen",
     "Chartloc": "0404",
     "Locations": [
       {
-        "Name": "Raspire",
+        "Name": "Siaspire",
         "Environment": "Rocky, hilly, with an oxygen-lean biosphere and pleasantly warm temperatures.",
         "TL": "0",
-        "Description": "Raspire is a rocky, uninhabited world. It boasts a wide variety of avian life, and infrequently hosts Ran adventurers and tourists."
+        "Description": "Siaspire is a rocky, uninhabited world. It boasts a wide variety of avian life, and infrequently hosts Sian adventurers and tourists."
       },
       {
         "Name": "Jewel",
         "Environment": "Oxygen-rich biosphere and temperate climate.",
         "TL": "4",
-        "Description": "Jewel is a lightly populated world conquered by the Ran Empire fairly recently. Theran construction is occuring all around, with some tension between old Theran families and new Theran entrepreneurs and investment groups desiring new farming land and space to build manses. There are rumors of an underground and long-surviving resistance from the conquered peoples of Jewel."
+        "Description": "Jewel is a lightly populated world conquered by the Sian Empire fairly recently. Sian construction is occuring all around, with some tension between old Sian families and new Sian entrepreneurs and investment groups desiring new farming land and space to build manses. There are rumors of an underground and long-surviving resistance from the conquered peoples of Jewel."
       },
-
+    ]
+  },
+  {
+    "System": "Ujanjang Pret",
+    "Chartloc": "0504",
+    "Locations": [
+      {
+        "Name": "Paruslis",
+        "Environment": "Heavy radiation, unbreathable atmosphere.",
+        "TL": "0",
+        "Description": "The hazardous ruins of a neo-tribal pre-Scream world."
+      },
+      {
+        "Name": "Kaanelis",
+        "Environment": "Highly active volcanic world. Breathable atmosphere, but a filtration mask is advised.",
+        "TL": "3",
+        "Description": "This beautifully rugged, desolate world is intensely volcanically active. The Sian Empire has colonized the planet to an extent with a small orbital port and refuelling station, but it is purely a tourist destination for the Sian. There are rumors of ancient civilizations living here, as they do on Paruslis, but the geologic activiy has discouraged study."
+      },
     ]
   },
   {
@@ -91,7 +108,7 @@ var bodies = [
         "Name": "Koshk",
         "Environment": "Very cold temperatures, a warming suit is required to be outdoors here. The sun in this system produces lower than usual light. Normal breathable biosphere.",
         "TL": "3",
-        "Description": "Koshk is a heavy industry suburb of Myev. Many of the company compounds here work on projects that are too dangerous or restricted to develop on Myev. Most of the inhabitants are automated robots; transit in and out is restricted, and the data link between the two planets is minimal and managed carefully."
+        "Description": "Koshk is a heavy industry suburb of Myev. Many of the company compounds here work on projects that are too dangerous or restricted to develop on Myev. Most of the inhabitants are automated robots; tSiansit in and out is restricted, and the data link between the two planets is minimal and managed carefully."
       },
       {
         "Name": "Yanno",
@@ -103,7 +120,7 @@ var bodies = [
   },
   {
     "System": "Nabila",
-    "Chartloc": "0000",
+    "Chartloc": "0408",
     "Locations": [
       {
         "Name": "Cochene",
@@ -115,7 +132,7 @@ var bodies = [
         "Name": "Fenagh",
         "Environment": "",
         "TL": "",
-        "Description": "An orbital ruin, where government researchers are investigating strange tech."
+        "Description": "An orbital ruin, where government researchers are investigating stSiange tech."
       },
       {
         "Name": "Ulu",
