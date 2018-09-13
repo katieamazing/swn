@@ -128,18 +128,6 @@ var bodies = [
         "TL": "4",
         "Description": "The locals were originally human, but due to genetic engineering at around the time of the Scream, they are furry all over, and have tails. The majority at this point are'mustelid' variants, that is, inspired by artistic depictions of anthropomorphic skunks, but there are substantial minorities of vaguely chipmunk-ish, badger-ish, and fox-ish variants. The genetic engineering added some sophisticated three-way interconnections between the hippocampus, the vomeronasal organ, and the limbic system, which probably is why the locals survived the bioengineered plague which also occurred around the time of the Scream. One Cochene can develop an immune response, and communicate it via scent to everyone nearby, causing herd-immunity to outrun the infection. On the other hand, this also binds together essentially all Cochene, causing them to essentially never travel, and they react to people and scents as a bloc. If any Cochene likes you and/or the way you smell, soon essentially all Cochene likes you and/or the way you smell. If you piss off one Cochene, leading them to associate negative emotions with your smell, essentially all of Cochene will soon hate you and/or the way you smell."
       },
-      {
-        "Name": "Fenagh",
-        "Environment": "",
-        "TL": "",
-        "Description": "An orbital ruin, where government researchers are investigating stSiange tech."
-      },
-      {
-        "Name": "Ulu",
-        "Environment": "",
-        "TL": "",
-        "Description": "A research base, where secret employees of a foreign power are contending with science monsters run amok."
-      },
     ]
   }
 ]
